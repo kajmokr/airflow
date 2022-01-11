@@ -19,7 +19,7 @@ def process_done(p2):
     print(p2)
     return 'done'
 
-with DAG(dag_id='parallel_dag', schedule_interval='0 0 * * *', default_args=default_args, catchup=False) as dag:
+with DAG(dag_id='pilot_dag', schedule_interval='0 0 * * *', default_args=default_args, catchup=False) as dag:
     
     # Tasks dynamically generated 
     task_1 = BashOperator(task_id='task_1', bash_command='echo "DAG Started"')
@@ -38,7 +38,7 @@ with DAG(dag_id='parallel_dag', schedule_interval='0 0 * * *', default_args=defa
         network_mode="bridge"
     )
 
-    task_5 = PythonOperator(task_id='task_2', python_callable=process_done, op_args=['my super parameter'])
+    task_5 = PythonOperator(task_id='task_5', python_callable=process_done, op_args=['my super parameter'])
 
     task_1 >> task_2 >> task_3 >> task_4 >> task_5
         
